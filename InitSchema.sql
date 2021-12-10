@@ -1,32 +1,32 @@
 CREATE TABLE subscribers (
-  sub_id SERIAL PRIMARY KEY,
+  sub_id int primary key,
   full_name varchar,
   created_at timestamp,
-  country_code int,
+  country varchar,
   phone_no int,
   cur_plan_id int
 );
 
 CREATE TABLE transactions (
-  trans_id SERIAL PRIMARY KEY,
+  trans_id int primary key,
   sub_id int,
   trans_type varchar,
   created_at timestamp,
-  trans_location varchar,
+  country varchar,
   buy_plan_id int
 );
 
 CREATE TABLE plan (
-  plan_id int PRIMARY KEY,
-  plan_cost int,
-  validity int,
+  plan_id int primary key,
   plan_data numeric,
+  validity int,
+  plan_cost int,
   feature_id int,
-  Postpaid boolean
+  postpaid boolean
 );
 
 CREATE TABLE usage_data (
-  usage_id SERIAL PRIMARY KEY,
+  usage_id int primary key,
   sub_id int,
   use_type varchar,
   usage_time timestamp,
@@ -34,10 +34,10 @@ CREATE TABLE usage_data (
 );
 
 CREATE TABLE features (
-  feature_id int PRIMARY KEY,
+  feature_id int primary key,
   sms int,
   netflix boolean,
-  prime boolean,
+  primevideo boolean,
   hotstar boolean
 );
 
