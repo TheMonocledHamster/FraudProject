@@ -1,50 +1,52 @@
-CREATE TABLE "subscribers" (
-  "id" SERIAL PRIMARY KEY,
-  "full_name" varchar,
-  "created_at" timestamp,
-  "country_code" int,
-  "phone_no" int,
-  "cur_plan_id" int
+CREATE TABLE subscribers (
+  sub_id SERIAL PRIMARY KEY,
+  full_name varchar,
+  created_at timestamp,
+  country_code int,
+  phone_no int,
+  cur_plan_id int
 );
 
-CREATE TABLE "transactions" (
-  "id" SERIAL PRIMARY KEY,
-  "sub_id" int,
-  "type" varchar,
-  "created_at" timestamp,
-  "location" varchar,
-  "buy_plan_id" int
+CREATE TABLE transactions (
+  trans_id SERIAL PRIMARY KEY,
+  sub_id int,
+  trans_type varchar,
+  created_at timestamp,
+  trans_location varchar,
+  buy_plan_id int
 );
 
-CREATE TABLE "Plans" (
-  "id" int PRIMARY KEY,
-  "cost" int,
-  "validity" int,
-  "data" float,
-  "feature_id" int,
-  "Postpaid" bool
+CREATE TABLE plan (
+  plan_id int PRIMARY KEY,
+  plan_cost int,
+  validity int,
+  plan_data numeric,
+  feature_id int,
+  Postpaid boolean
 );
 
-CREATE TABLE "usage" (
-  "id" SERIAL PRIMARY KEY,
-  "sub_id" int,
-  "type" varchar,
-  "time" timestamp,
-  "amount" int
+CREATE TABLE usage_data (
+  usage_id SERIAL PRIMARY KEY,
+  sub_id int,
+  use_type varchar,
+  usage_time timestamp,
+  amount int
 );
 
-CREATE TABLE "features" (
-  "id" SERIAL PRIMARY KEY,
-  "sms" int,
-  "netflix" boolean,
-  "prime" boolean,
-  "hotstar" boolean
+CREATE TABLE features (
+  feature_id int PRIMARY KEY,
+  sms int,
+  netflix boolean,
+  prime boolean,
+  hotstar boolean
 );
 
-ALTER TABLE "features" ADD FOREIGN KEY ("id") REFERENCES "Plans" ("feature_id");
+ALTER TABLE plan ADD FOREIGN KEY (feature_id) REFERENCES features (feature_id);
 
-ALTER TABLE "usage" ADD FOREIGN KEY ("sub_id") REFERENCES "subscribers" ("id");
+ALTER TABLE usage_data ADD FOREIGN KEY (sub_id) REFERENCES subscribers (sub_id);
 
-ALTER TABLE "transactions" ADD FOREIGN KEY ("sub_id") REFERENCES "subscribers" ("id");
+ALTER TABLE transactions ADD FOREIGN KEY (sub_id) REFERENCES subscribers (sub_id);
 
-ALTER TABLE "subscribers" ADD FOREIGN KEY ("cur_plan_id") REFERENCES "Plans" ("id");
+ALTER TABLE subscribers ADD FOREIGN KEY (cur_plan_id) REFERENCES plan (plan_id);
+
+ALTER TABLE transactions ADD FOREIGN  KEY (buy_plan_id) REFERENCES plan (plan_id);
