@@ -12,7 +12,7 @@ for _ in range(5):
     fake_data["created_at"].append( None )
     fake_data["country_code"].append( random.randint(1,999) )
     fake_data["phone_number"].append( random.randint(1000000000,9999999999) )
-    fake_data["cur_plan_id"].append( fake.date_of_birth() )
+    fake_data["cur_plan_id"].append( None )
 
 df_fake_data = pd.DataFrame(fake_data)
 
