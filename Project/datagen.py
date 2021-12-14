@@ -55,6 +55,3 @@ df_fake_usage_data = pd.DataFrame(fake_usage_data)
 # print(df_fake_usage_data)
 df_fake_features = (pd.DataFrame(fake_features)).drop_duplicates()
 # print(df_fake_features)
-
-
-#print(df_fake_plan)
