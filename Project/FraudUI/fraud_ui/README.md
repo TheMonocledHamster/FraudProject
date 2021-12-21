@@ -1,4 +1,4 @@
-# fraud_ui
+# ui
 
 A new Flutter project.
 
