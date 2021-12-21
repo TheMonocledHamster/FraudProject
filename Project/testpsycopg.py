@@ -1,12 +1,11 @@
 import psycopg2
 import json
 
-with open("Resources/DBdeets.json") as deets:
+with open("Project\DBdeets.json","r") as deets:
     params = json.load(deets)
 
-conn = psycopg2.connect(**params)
+pg_connection = psycopg2.connect(**params)
 
-cur = conn.cursor()
-with open("InitSchema.sql") as schema: 
-    cur.execute(schema.read.replace("\n"," "));
-    
+db_cursor = pg_connection.cursor()
+with open("Project/InitSchema.sql","r") as schema: 
+    db_cursor.execute(schema.read())
