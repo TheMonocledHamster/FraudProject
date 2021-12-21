@@ -12,7 +12,7 @@ fake_plan = defaultdict(list)
 fake_usage_data = defaultdict(list)
 fake_features = defaultdict(list)
 
-for _ in range(5):
+for _ in range(1000):
     fake_subscribers["full_name"].append( fake.name() )
     fake_subscribers["created_at"].append( fake.date_time() )
     fake_subscribers["country"].append( fake.country() )

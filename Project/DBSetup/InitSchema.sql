@@ -1,4 +1,4 @@
-CREATE TABLE subscribers (
+CREATE TABLE IF NOT EXISTS subscribers (
   sub_id int primary key,
   full_name varchar,
   created_at timestamp,
@@ -7,7 +7,7 @@ CREATE TABLE subscribers (
   cur_plan_id int
 );
 
-CREATE TABLE transactions (
+CREATE TABLE IF NOT EXISTS transactions (
   trans_id int primary key,
   sub_id int,
   trans_type varchar,
@@ -16,7 +16,7 @@ CREATE TABLE transactions (
   buy_plan_id int
 );
 
-CREATE TABLE plan (
+CREATE TABLE IF NOT EXISTS plan (
   plan_id int primary key,
   plan_data numeric,
   validity int,
@@ -25,7 +25,7 @@ CREATE TABLE plan (
   postpaid boolean
 );
 
-CREATE TABLE usage_data (
+CREATE TABLE IF NOT EXISTS usage_data (
   usage_id int primary key,
   sub_id int,
   use_type varchar,
@@ -33,7 +33,7 @@ CREATE TABLE usage_data (
   amount int
 );
 
-CREATE TABLE features (
+CREATE TABLE IF NOT EXISTS features (
   feature_id int primary key,
   sms int,
   netflix boolean,
