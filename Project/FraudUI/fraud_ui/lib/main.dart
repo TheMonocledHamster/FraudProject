@@ -24,8 +24,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final List<String> _titles = [
+    'Home',
+    'Stats',
+    'Frauds',
+    'Queries',
+  ];
+  final List<Widget> _icons = [
+    Icon(Icons.home),
+    Icon(Icons.grade),
+    Icon(Icons.person),
+    Icon(Icons.save),
+  ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Row(
+        children: <Widget>[
+          ListView.builder(itemBuilder: (context, i) {
+            return ListTile(
+              title: Text(_titles[i]),
+              leading: _icons[i],
+            );
+          }),
+        ],
+      ),
+    );
   }
 }
