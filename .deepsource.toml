@@ -7,7 +7,6 @@ enabled = true
 [[analyzers]]
 name = "sql"
 enabled = true
-maxlinelength | Integer | 100
 
 [[analyzers]]
 name = "python"
