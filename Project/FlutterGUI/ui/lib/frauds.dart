@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class Frauds extends StatefulWidget {
   const Frauds({Key? key}) : super(key: key);
@@ -11,8 +12,10 @@ class _FraudsState extends State<Frauds> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text('frauds'),
+      child: Lottie.asset(
+        'assets/JSON/comingSoon.json',
+        height: 250.0,
+        width: 250.0,
       ),
     );
   }
