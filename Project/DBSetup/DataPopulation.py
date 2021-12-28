@@ -24,6 +24,7 @@ for i in range(24):
     fake_features["netflix"].append( feature_list[i][1] )
     fake_features["primevideo"].append( feature_list[i][2] )
     fake_features["hotstar"].append( feature_list[i][3] )
+df_fake_features = pd.DataFrame(fake_features)
 
 
 """ Generate subscriber identities for subs table """
@@ -33,7 +34,7 @@ for _ in range(10):
     fake_subscribers["country"].append( fake.country() )
     fake_subscribers["phone_number"].append( random.randint(1000000000,9999999999) )
     fake_subscribers["cur_plan_id"].append( None )
-
+df_fake_subscribers = pd.DataFrame(fake_subscribers)
 
 """ Generate transactions to populate user's transactions table """
 avl_trans = ["SIM Change","Plan Renewal","New Plan","Data Add-on"]
@@ -43,6 +44,7 @@ for _ in range(5):
     fake_transactions["created_at"].append( fake.date_time() )
     fake_transactions["country"].append( None ) #Fill this with sub_id's country
     fake_transactions["buy_plan_id"].append( None )
+df_fake_transactions = pd.DataFrame(fake_transactions)
 
 
 """ Generate plans, calculate costs and populate plans table """
@@ -53,6 +55,7 @@ for i in range(10):
     fake_plan["plan_cost"].append( get_cost(i) )
     fake_plan["feature_id"].append( None )
     fake_plan["postpaid"].append( random.choice([False,False,False,True]) )
+df_fake_plan = pd.DataFrame(fake_plan)
 
 
 """ Generate actions to populate usage table """
@@ -63,10 +66,8 @@ for _ in range(50):
     fake_usage_data["use_type"].append( random.choice(avl_actions) )
     fake_usage_data["usage_time"].append( fake.date_time() )
     fake_usage_data["amount"].append( random.randint(1,60) )
-
-
-df_fake_subscribers = pd.DataFrame(fake_subscribers)
-df_fake_transactions = pd.DataFrame(fake_transactions)
-df_fake_plan = pd.DataFrame(fake_plan)
 df_fake_usage_data = pd.DataFrame(fake_usage_data)
-df_fake_features = pd.DataFrame(fake_features)
+
+
+
+
