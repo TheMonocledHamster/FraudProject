@@ -4,6 +4,15 @@ import pandas as pd
 from collections import defaultdict
 import random
 import itertools
+import os
+import json
+
+relpath = lambda p: os.path.normpath(os.path.join(os.path.dirname(__file__), p))
+with open(relpath("DBdetails.json"),"r") as deets:
+    params = json.load(deets)
+pg_connection = psycopg2.connect(dbname=params["dbname"], user=params["user"], password=params["password"], host=params["host"], port=params["port"])
+pg_connection.set_session(autocommit=True)
+db_cursor = pg_connection.cursor()
 
 
 fake = Faker()
@@ -36,6 +45,7 @@ for _ in range(10):
     fake_subscribers["cur_plan_id"].append( None )
 df_fake_subscribers = pd.DataFrame(fake_subscribers)
 
+
 """ Generate transactions to populate user's transactions table """
 avl_trans = ["SIM Change","Plan Renewal","New Plan","Data Add-on"]
 for _ in range(5):
@@ -67,7 +77,4 @@ for _ in range(50):
     fake_usage_data["usage_time"].append( fake.date_time() )
     fake_usage_data["amount"].append( random.randint(1,60) )
 df_fake_usage_data = pd.DataFrame(fake_usage_data)
-
-
-
 
