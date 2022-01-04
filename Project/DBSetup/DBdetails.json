@@ -1,7 +1,7 @@
 {
-    "host":"john.db.elephantsql.com",
-    "dbname":"lfojbrur",
-    "user":"lfojbrur",
-    "password":"VzMU1RUOJDYy_xaaFrxurGcrFycCASRe",
-    "port":5432
+    "HOST":"john.db.elephantsql.com",
+    "NAME":"lfojbrur",
+    "USER":"lfojbrur",
+    "PASSWORD":"VzMU1RUOJDYy_xaaFrxurGcrFycCASRe",
+    "PORT":5432
 }
