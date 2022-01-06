@@ -1,6 +1,7 @@
 from faker import Faker
 import psycopg2
 import pandas as pd
+import numpy as np
 from collections import defaultdict
 import random
 import itertools
@@ -47,12 +48,12 @@ for _ in range(5):
 
 """ Generate plans, calculate costs and populate plans table """
 get_cost = lambda i : fake_plan["plan_data"][i] * fake_plan["validity"][i] * 3.0
-for i in range(10):
+for i in range(100):
     fake_plan["plan_data"].append( random.randint(2,6)/2.0 )
     fake_plan["validity"].append( random.randint(15,360) )
     fake_plan["plan_cost"].append( get_cost(i) )
     fake_plan["feature_id"].append( None )
-    fake_plan["postpaid"].append( random.choice([False,False,False,True]) )
+    fake_plan["postpaid"].append( np.random.choice([False,True],p=[0.75,0.25]) )
 
 
 """ Generate actions to populate usage table """
@@ -71,3 +72,5 @@ df_fake_plan = pd.DataFrame(fake_plan)
 df_fake_usage_data = pd.DataFrame(fake_usage_data)
 df_fake_features = pd.DataFrame(fake_features)
 
+# print(df_fake_features,df_fake_plan,df_fake_subscribers,df_fake_transactions,df_fake_usage_data,sep="\n\n")
+print(df_fake_plan.loc[False,False,False,False,False,True])
