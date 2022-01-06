@@ -1,0 +1,18 @@
+Features -> Plans -> Subs(curplan) -> trans&usage(sub_id) -> trans(country)
+
+np.random.uniform for usage_table
+
+Truly Random +100 to flag frauds
+
+buy_plan_id loop -> animesh's comparison plan
+
+Aggregate data from the company's viewpoint(with timestamp) (year-wise as well)
+
+User growth, from 2005-2010
+Country-wise, plan-wise
+
+while fillin transactions:
+  if transtype is NewPlan:
+    compare(buy->cur plan)
+    fill in track_plans table
+  update sub's curplan
