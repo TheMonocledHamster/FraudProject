@@ -1,4 +1,5 @@
 from faker import Faker
+from numpy.lib.function_base import append
 import psycopg2
 import pandas as pd
 import numpy as np
@@ -78,10 +79,12 @@ for i in range(Const.USE_RANGE):
     fake_usage_data["amount"].append( random.randint(1,60) )
 df_fake_usage_data = pd.DataFrame(fake_usage_data)
 
+
 #TRANSACTIONS
 """ Generate transactions to populate user's transactions table """
 avl_trans = Const.TRANS_TYPES
 p_trans = Const.p_trans
+tracklist = []
 for i in range(Const.TRANS_RANGE):
     fake_transactions["trans_id"].append( i )
     fake_transactions["sub_id"].append( np.random.choice(df_fake_subscribers["sub_id"].tolist()) )
@@ -92,10 +95,32 @@ for i in range(Const.TRANS_RANGE):
         fake_transactions["buy_plan_id"].append( df_fake_subscribers.loc[fake_transactions["sub_id"][i],"cur_plan_id"] )
     else:
         fake_transactions["buy_plan_id"].append( np.random.choice(df_fake_plans.index.tolist()) )
-        
-
+        tracklist.append(i)
 df_fake_transactions = pd.DataFrame(fake_transactions)
 
 
+#TRACKING
+def comparePlans(t_id):
+    sub_affected = df_fake_transactions.iloc[t_id,1]
+    init_plan_id = df_fake_subscribers.loc[sub_affected,"cur_plan_id"]
+    changed_plan_id = df_fake_transactions.loc[t_id,"buy_plan_id"]
+    df_fake_subscribers.at[sub_affected,"cur_plan_id"] = changed_plan_id
+    return df_fake_plans.iloc[changed_plan_id,3] - df_fake_plans.iloc[init_plan_id,3]
 
-print(df_fake_subscribers,df_fake_transactions,df_fake_usage_data,sep="\n\n")
+def track_change(t_id):
+    """ Keeps track of plan changes """
+    cmp = comparePlans(t_id)
+    if cmp == 0:
+        return
+    fake_tracking["tracking_id"].append( track_change.count )
+    fake_tracking["trans_id"].append( t_id )
+    fake_tracking["upgrade"].append( bool(cmp>0) )
+    fake_tracking["cost_diff"].append( cmp )
+    track_change.count += 1
+track_change.count = 0
+
+for i in tracklist:
+    track_change(i)
+df_fake_tracking = pd.DataFrame(fake_tracking)
+
+print(df_fake_subscribers,df_fake_transactions,df_fake_tracking,sep="\n\n")
