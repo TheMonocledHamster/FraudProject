@@ -9,7 +9,7 @@ import os
 import json
 
 relpath = lambda p: os.path.normpath(os.path.join(os.path.dirname(__file__), p))
-with open(relpath("DBdetails.json"),"r") as deets:
+with open(relpath("../../Resources/DBdetails.json"),"r") as deets:
     params = json.load(deets)
 pg_connection = psycopg2.connect(dbname=params["dbname"], user=params["user"], password=params["password"], host=params["host"], port=params["port"])
 pg_connection.set_session(autocommit=True)
