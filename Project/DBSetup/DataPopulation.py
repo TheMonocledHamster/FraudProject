@@ -65,7 +65,7 @@ for i in range(100):
     fake_plan["validity"].append( random.randint(15,360) )
     fake_plan["plan_cost"].append( get_cost(i) )
     fake_plan["feature_id"].append( None )
-    fake_plan["postpaid"].append( random.choice([False,False,False,True]) )
+    fake_plan["postpaid"].append( np.random.choice([False,True],p=[0.75,0.25]) )
 df_fake_plan = pd.DataFrame(fake_plan)
 
 
