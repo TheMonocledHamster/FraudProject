@@ -22,6 +22,7 @@ fake_plans = defaultdict(list)
 fake_usage_data = defaultdict(list)
 fake_features = defaultdict(list)
 fake_tracking = defaultdict(list)
+new_subs = defaultdict(list)
 
 
 #FEATURES
@@ -59,12 +60,53 @@ p_countries = Const.p_countries
 for i in range(Const.SUBS_RANGE):
     fake_subscribers["sub_id"].append( i )
     fake_subscribers["full_name"].append( fake.name() )
-    fake_subscribers["created_at"].append( fake.date_time_between(start_date='-9y', end_date='-3y') )
+    fake_subscribers["created_at"].append( fake.date_time_between(start_date='-12y', end_date='-4y') )
     fake_subscribers["country"].append( np.random.choice(list(avl_countries.keys()), p=p_countries) )
     fake_subscribers["phone_number"].append( '+' + str(avl_countries[fake_subscribers["country"][i]]) + ' ' \
         + str(random.randint(190,499)) + ' ' + str(random.randint(100,999)) + ' ' + str(random.randint(1000,9999)) )
     fake_subscribers["cur_plan_id"].append( np.random.choice(df_fake_plans.index.tolist()) )
 df_fake_subscribers = pd.DataFrame(fake_subscribers)
+
+
+#TRANSACTIONS
+""" Generate transactions to populate user's transactions table """
+avl_trans = Const.TRANS_TYPES
+p_trans = Const.p_trans
+tracklist = []
+j = df_fake_subscribers.shape[0]
+
+fake_transactions["trans_id"].append( 0 )
+fake_transactions["sub_id"].append( 0 )
+fake_transactions["trans_type"].append( avl_trans[1] )
+fake_transactions["created_at"].append( fake.date_time_between(start_date='-4y', end_date='now') )
+fake_transactions["country"].append( df_fake_subscribers.loc[0,"country"] )
+fake_transactions["buy_plan_id"].append( df_fake_subscribers.loc[0,"cur_plan_id"] )
+
+for i in range(1,Const.TRANS_RANGE):
+    fake_transactions["trans_type"].append( np.random.choice(avl_trans, p=p_trans) )
+    fake_transactions["created_at"].append( fake.date_time_between(start_date='-4y', end_date='now') )
+    fake_transactions["trans_id"].append( i )
+    if fake_transactions["trans_type"][i]  != "New Sub":
+        fake_transactions["sub_id"].append( np.random.choice(df_fake_subscribers["sub_id"].tolist()) )
+        fake_transactions["country"].append( df_fake_subscribers.loc[fake_transactions["sub_id"][i],"country"] )
+        if fake_transactions["trans_type"][i] == "New Plan":
+            fake_transactions["buy_plan_id"].append( np.random.choice(df_fake_plans.index.tolist()) )
+            tracklist.append(i)
+        else:
+            fake_transactions["buy_plan_id"].append( df_fake_subscribers.loc[fake_transactions["sub_id"][i],"cur_plan_id"] )
+    else:
+        fake_transactions["buy_plan_id"].append( np.random.choice(df_fake_plans.index.tolist()) )
+        fake_transactions["country"].append( np.random.choice(list(avl_countries.keys()), p=p_countries) )
+        new_subs["sub_id"].append( j )
+        new_subs["full_name"].append(fake.name())
+        new_subs["created_at"].append(fake_transactions["created_at"][i])
+        new_subs["country"].append(fake_transactions["country"][i])
+        new_subs["phone_number"].append('+' + str(avl_countries[fake_transactions["country"][i]]) + ' '  + str(random.randint(190,499)) + ' ' + str(random.randint(100,999)) + ' ' + str(random.randint(1000,9999)))
+        new_subs["cur_plan_id"].append(fake_transactions["buy_plan_id"][i])
+        fake_transactions["sub_id"].append( j )
+        j += 1
+df_fake_transactions = pd.DataFrame(fake_transactions)
+df_fake_subscribers = df_fake_subscribers.append(pd.DataFrame(new_subs),ignore_index=True)
 
 
 #USAGE
@@ -78,25 +120,6 @@ for i in range(Const.USE_RANGE):
     fake_usage_data["usage_time"].append( fake.date_time_between(start_date='-2y', end_date='now') )
     fake_usage_data["amount"].append( random.randint(1,60) )
 df_fake_usage_data = pd.DataFrame(fake_usage_data)
-
-
-#TRANSACTIONS
-""" Generate transactions to populate user's transactions table """
-avl_trans = Const.TRANS_TYPES
-p_trans = Const.p_trans
-tracklist = []
-for i in range(Const.TRANS_RANGE):
-    fake_transactions["trans_id"].append( i )
-    fake_transactions["sub_id"].append( np.random.choice(df_fake_subscribers["sub_id"].tolist()) )
-    fake_transactions["trans_type"].append( np.random.choice(avl_trans, p=p_trans) )
-    fake_transactions["created_at"].append( fake.date_time_between(start_date='-3y', end_date='now') )
-    fake_transactions["country"].append( df_fake_subscribers.loc[fake_transactions["sub_id"][i],"country"] )
-    if fake_transactions["trans_type"][i] != "New Plan":
-        fake_transactions["buy_plan_id"].append( df_fake_subscribers.loc[fake_transactions["sub_id"][i],"cur_plan_id"] )
-    else:
-        fake_transactions["buy_plan_id"].append( np.random.choice(df_fake_plans.index.tolist()) )
-        tracklist.append(i)
-df_fake_transactions = pd.DataFrame(fake_transactions)
 
 
 #TRACKING
