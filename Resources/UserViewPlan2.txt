@@ -11,7 +11,7 @@ Aggregate data from the company's viewpoint(with timestamp) (year-wise as well)
 User growth, from 2005-2010
 Country-wise, plan-wise
 
-while fillin transactions:
+while filling transactions:
   if transtype is NewPlan:
     compare(buy->cur plan)
     fill in track_plans table

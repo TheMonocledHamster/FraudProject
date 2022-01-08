@@ -1,10 +1,3 @@
-China
-India
-Sri Lanka
-Bhutan
-Myanmar
-Bangladesh
-
 Upto 2010, then from 2011
 
 Country-wise users
@@ -16,4 +9,3 @@ Plan-wise frauds ##
 
 Compare plan-changes
 Check trans_type, if "New Plan", then compare buy_plan_id > cur_plan_id
-

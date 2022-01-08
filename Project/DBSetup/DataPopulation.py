@@ -11,7 +11,7 @@ import json
 relpath = lambda p: os.path.normpath(os.path.join(os.path.dirname(__file__), p))
 with open(relpath("../../Resources/DBdetails.json"),"r") as deets:
     params = json.load(deets)
-pg_connection = psycopg2.connect(dbname=params["dbname"], user=params["user"], password=params["password"], host=params["host"], port=params["port"])
+pg_connection = psycopg2.connect(dbname=params["NAME"], user=params["USER"], password=params["PASSWORD"], host=params["HOST"], port=params["PORT"])
 pg_connection.set_session(autocommit=True)
 db_cursor = pg_connection.cursor()
 
@@ -51,7 +51,7 @@ df_fake_subscribers = pd.DataFrame(fake_subscribers)
 avl_trans = ["SIM Change","Plan Renewal","New Plan","Data Add-on"]
 for _ in range(5):
     fake_transactions["sub_id"].append( None )
-    fake_transactions["trans_type"].append( random.choice(avl_trans) )
+    fake_transactions["trans_type"].append( np.random.choice(avl_trans,p=[0.05,0.65,0.2,0.1]) )
     fake_transactions["created_at"].append( fake.date_time() )
     fake_transactions["country"].append( None ) #Fill this with sub_id's country
     fake_transactions["buy_plan_id"].append( None )
@@ -59,8 +59,8 @@ df_fake_transactions = pd.DataFrame(fake_transactions)
 
 
 """ Generate plans, calculate costs and populate plans table """
-get_cost = lambda i : fake_plan["plan_data"][i] * fake_plan["validity"][i] * 3.0
-for i in range(100):
+get_cost = lambda i : fake_plan["plan_data"][i] * fake_plan["validity"][i] * 0.5
+for i in range(10):
     fake_plan["plan_data"].append( random.randint(2,6)/2.0 )
     fake_plan["validity"].append( random.randint(15,360) )
     fake_plan["plan_cost"].append( get_cost(i) )
@@ -71,15 +71,10 @@ df_fake_plan = pd.DataFrame(fake_plan)
 
 """ Generate actions to populate usage table """
 avl_actions = ["Call","SMS","Video Call"]
-avl_actions.extend(["Call","SMS"]*3)
 for _ in range(50):
     fake_usage_data["sub_id"].append( None )
-    fake_usage_data["use_type"].append( random.choice(avl_actions) )
+    fake_usage_data["use_type"].append( np.random.choice(avl_actions,p=[0.45,0.45,0.1]) )
     fake_usage_data["usage_time"].append( fake.date_time() )
     fake_usage_data["amount"].append( random.randint(1,60) )
 df_fake_usage_data = pd.DataFrame(fake_usage_data)
-df_fake_features = pd.DataFrame(fake_features)
-
-# print(df_fake_features,df_fake_plan,df_fake_subscribers,df_fake_transactions,df_fake_usage_data,sep="\n\n")
-print(df_fake_plan.loc[False,False,False,False,False,True])
 
