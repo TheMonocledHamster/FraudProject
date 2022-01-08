@@ -1,11 +1,19 @@
 import streamlit as st
 import psycopg2 as pg
+import json
+import os
+import sys
 
 # Initialize connection.
 # Uses st.cache to only run once.
 @st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
+
 def init_connection():
-    return pg.connect(dbname="lfojbrur", user="lfojbrur", password="VzMU1RUOJDYy_xaaFrxurGcrFycCASRe", host="john.db.elephantsql.com", port=5432)
+    relpath = lambda p: os.path.normpath(os.path.join(os.path.dirname(__file__), p))
+    with open(relpath("..\DBdetails.json"),"r") as deets:
+        params = json.load(deets)
+    return pg.connect(dbname=params["NAME"], user=params["USER"], password=params["PASSWORD"], host=params["HOST"], port=params["PORT"])
+
 
 conn = init_connection()
 

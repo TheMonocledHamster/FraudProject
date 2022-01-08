@@ -2,13 +2,15 @@ import streamlit as st
 import dashboard as db 
 import stats as stats
 import queries as queries
-st.sidebar.title(
+
+with st.sidebar:
+    st.title(
     "FraudProject",
-)
-page=st.sidebar.radio(
+    )
+    page=st.selectbox(
     "",
     ['Dashboard','Stats','Queries']
-)
+    )
 
 if(page=='Dashboard'):
     db.Dashboard()
