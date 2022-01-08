@@ -1,18 +1,13 @@
 from faker import Faker
-from numpy.lib.function_base import append
-import psycopg2
 import pandas as pd
 import numpy as np
 from collections import defaultdict
 import random
 import itertools
+import psycopg2
+import psycopg2.extras as extras
 import Const
 
-
-params = Const.PARAMS
-pg_connection = psycopg2.connect(dbname=params["NAME"], user=params["USER"], password=params["PASSWORD"], host=params["HOST"], port=params["PORT"])
-pg_connection.set_session(autocommit=True)
-db_cursor = pg_connection.cursor()
 
 
 fake = Faker()
@@ -62,7 +57,7 @@ for i in range(Const.SUBS_RANGE):
     fake_subscribers["full_name"].append( fake.name() )
     fake_subscribers["created_at"].append( fake.date_time_between(start_date='-9y', end_date='-4y') )
     fake_subscribers["country"].append( np.random.choice(list(avl_countries.keys()), p=p_countries) )
-    fake_subscribers["phone_number"].append( '+' + str(avl_countries[fake_subscribers["country"][i]]) + ' ' \
+    fake_subscribers["phone_no"].append( '+' + str(avl_countries[fake_subscribers["country"][i]]) + ' ' \
         + str(random.randint(190,499)) + ' ' + str(random.randint(100,999)) + ' ' + str(random.randint(1000,9999)) )
     fake_subscribers["cur_plan_id"].append( np.random.choice(df_fake_plans.index.tolist()) )
 df_fake_subscribers = pd.DataFrame(fake_subscribers)
@@ -101,7 +96,7 @@ for i in range(1,Const.TRANS_RANGE):
         new_subs["full_name"].append(fake.name())
         new_subs["created_at"].append(fake_transactions["created_at"][i])
         new_subs["country"].append(fake_transactions["country"][i])
-        new_subs["phone_number"].append('+' + str(avl_countries[fake_transactions["country"][i]]) + ' '  + str(random.randint(190,499)) + ' ' + str(random.randint(100,999)) + ' ' + str(random.randint(1000,9999)))
+        new_subs["phone_no"].append('+' + str(avl_countries[fake_transactions["country"][i]]) + ' '  + str(random.randint(190,499)) + ' ' + str(random.randint(100,999)) + ' ' + str(random.randint(1000,9999)))
         new_subs["cur_plan_id"].append(fake_transactions["buy_plan_id"][i])
         fake_transactions["sub_id"].append( j )
         j += 1
@@ -147,3 +142,32 @@ for i in tracklist:
 df_fake_tracking = pd.DataFrame(fake_tracking)
 
 
+
+
+tables = Const.TABLES
+data_frames = [df_fake_plans, df_fake_subscribers, df_fake_features, df_fake_tracking, df_fake_transactions, df_fake_usage_data]
+data = dict(zip(tables,data_frames))
+params = Const.PARAMS
+pg_connection = psycopg2.connect(dbname=params["NAME"], user=params["USER"], password=params["PASSWORD"], host=params["HOST"], port=params["PORT"])
+
+
+def execute_values(pg_conn, df, table):
+    tuples = [tuple(x) for x in df.to_numpy()]
+    cols = ','.join(list(df.columns))
+    query = "INSERT INTO %s(%s) VALUES %%s" % (table, cols)
+    db_cursor = pg_conn.cursor()
+    try:
+        extras.execute_values(db_cursor, query, tuples)
+        pg_conn.commit()
+        print("Data inserted into {} successfully...".format(table))
+    except(Exception, psycopg2.DatabaseError) as err:
+        print(err)
+        pg_conn.rollback()
+        db_cursor.close()
+
+
+for table in tables:
+    execute_values(pg_connection, data[table], table)
+
+print("Insert Success")
+pg_connection.close()
