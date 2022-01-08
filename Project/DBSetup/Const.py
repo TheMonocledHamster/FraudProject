@@ -35,6 +35,7 @@ TRANS_TYPES = ["SIM Change","Plan Renewal","New Plan","Data Add-on","New Sub"]
 p_trans = [0.01,0.60,0.05,0.14,0.2]
 
 
+
 PLANS_STORE = relpath("../StoreCSV/plans.csv")
 FEATURES_STORE = relpath("../StoreCSV/features.csv")
 SUBSCRIBERS_STORE = relpath("../StoreCSV/subscribers.csv")
