@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS tracking (
   trans_id int,
   upgrade boolean,
   cost_diff float
-)
+);
 
 ALTER TABLE plan ADD FOREIGN KEY (feature_id) REFERENCES features (feature_id);
 
