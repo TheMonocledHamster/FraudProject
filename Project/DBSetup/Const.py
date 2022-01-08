@@ -15,6 +15,8 @@ with open(relpath("../../Resources/DBdetails.json"),"r") as deets:
     PARAMS = json.load(deets)
 with open(relpath("InitSchema.sql"),"r") as SCHEMA:
     SCHEMA = SCHEMA.read()
+with open(relpath("AddForeignKeys.SQL"),"r") as FKeys:
+    FKeys = FKeys.read()
 
 
 COUNTRIES = {
@@ -36,18 +38,4 @@ p_trans = [0.01,0.60,0.05,0.14,0.2]
 
 
 
-PLANS_STORE = relpath("../StoreCSV/plans.csv")
-FEATURES_STORE = relpath("../StoreCSV/features.csv")
-SUBSCRIBERS_STORE = relpath("../StoreCSV/subscribers.csv")
-TRACKING_STORE = relpath("../StoreCSV/tracking.csv")
-TRANSACTIONS_STORE = relpath("../StoreCSV/transactions.csv")
-USAGE_DATA_STORE = relpath("../StoreCSV/usage_data.csv")
-
-TABLES = {
-    "plans":PLANS_STORE,
-    "subscribers":SUBSCRIBERS_STORE,
-    "features":FEATURES_STORE,
-    "tracking":TRACKING_STORE,
-    "transactions":TRANSACTIONS_STORE,
-    "usage_data":USAGE_DATA_STORE
-}
+TABLES = ["plans", "subscribers", "features", "tracking", "transactions", "usage_data"]
