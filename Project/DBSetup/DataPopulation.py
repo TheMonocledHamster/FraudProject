@@ -20,6 +20,7 @@ fake_transactions = defaultdict(list)
 fake_plans = defaultdict(list)
 fake_usage_data = defaultdict(list)
 fake_features = defaultdict(list)
+fake_tracking = defaultdict(list)
 
 
 #FEATURES
@@ -71,24 +72,28 @@ avl_actions = Const.ACTIONS
 p_actions = Const.p_actions
 for i in range(Const.USE_RANGE):
     fake_usage_data["usage_id"].append( i )
-    fake_usage_data["sub_id"].append( np.random.choice() )
+    fake_usage_data["sub_id"].append( np.random.choice(df_fake_subscribers["sub_id"].tolist()) )
     fake_usage_data["use_type"].append( np.random.choice(avl_actions,p=p_actions) )
-    fake_usage_data["usage_time"].append( fake.date_time_between(start_date='-2y', end_date='today') )
+    fake_usage_data["usage_time"].append( fake.date_time_between(start_date='-2y', end_date='now') )
     fake_usage_data["amount"].append( random.randint(1,60) )
 df_fake_usage_data = pd.DataFrame(fake_usage_data)
 
-
 #TRANSACTIONS
 """ Generate transactions to populate user's transactions table """
-avl_trans = ["SIM Change","Plan Renewal","New Plan","Data Add-on"]
-p_trans = [0.05,0.65,0.2,0.1]
+avl_trans = Const.TRANS_TYPES
+p_trans = Const.p_trans
 for i in range(Const.TRANS_RANGE):
     fake_transactions["trans_id"].append( i )
-    fake_transactions["sub_id"].append( None )
+    fake_transactions["sub_id"].append( np.random.choice(df_fake_subscribers["sub_id"].tolist()) )
     fake_transactions["trans_type"].append( np.random.choice(avl_trans, p=p_trans) )
-    fake_transactions["created_at"].append( fake.date_time_between(start_date='-3y', end_date='today') )
-    fake_transactions["country"].append( None ) #Fill this with sub_id's country
-    fake_transactions["buy_plan_id"].append( None )
+    fake_transactions["created_at"].append( fake.date_time_between(start_date='-3y', end_date='now') )
+    fake_transactions["country"].append( df_fake_subscribers.loc[fake_transactions["sub_id"][i],"country"] )
+    if fake_transactions["trans_type"][i] != "New Plan":
+        fake_transactions["buy_plan_id"].append( df_fake_subscribers.loc[fake_transactions["sub_id"][i],"cur_plan_id"] )
+    else:
+        fake_transactions["buy_plan_id"].append( np.random.choice(df_fake_plans.index.tolist()) )
+        
+
 df_fake_transactions = pd.DataFrame(fake_transactions)
 
 

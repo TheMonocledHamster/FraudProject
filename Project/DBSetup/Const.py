@@ -29,3 +29,6 @@ p_countries = [0.15, 0.2, 0.1, 0.2, 0.15, 0.2]
 
 ACTIONS = ["Call","SMS","Video Call"]
 p_actions = [0.45,0.45,0.1]
+
+TRANS_TYPES = ["SIM Change","Plan Renewal","New Plan","Data Add-on"]
+p_trans = [0.05,0.65,0.2,0.1]
