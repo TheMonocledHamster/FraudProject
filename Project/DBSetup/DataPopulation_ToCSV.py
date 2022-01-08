@@ -1,18 +1,12 @@
 from faker import Faker
-from numpy.lib.function_base import append
-import psycopg2
 import pandas as pd
 import numpy as np
 from collections import defaultdict
 import random
 import itertools
+import time
 import Const
 
-
-params = Const.PARAMS
-pg_connection = psycopg2.connect(dbname=params["NAME"], user=params["USER"], password=params["PASSWORD"], host=params["HOST"], port=params["PORT"])
-pg_connection.set_session(autocommit=True)
-db_cursor = pg_connection.cursor()
 
 
 fake = Faker()
@@ -146,4 +140,18 @@ for i in tracklist:
     track_change(i)
 df_fake_tracking = pd.DataFrame(fake_tracking)
 
-
+try:
+    time.sleep(0.5)
+    df_fake_subscribers.to_csv(Const.SUBSCRIBERS_STORE, index=False, header=False)
+    time.sleep(0.5)
+    df_fake_features.to_csv(Const.FEATURES_STORE, index=False, header=False)
+    time.sleep(0.5)
+    df_fake_plans.to_csv(Const.PLANS_STORE, index=False, header=False)
+    time.sleep(0.5)
+    df_fake_transactions.to_csv(Const.TRANSACTIONS_STORE, index=False, header=False)
+    time.sleep(0.5)
+    df_fake_usage_data.to_csv(Const.USAGE_DATA_STORE, index=False, header=False)
+    time.sleep(0.5)
+    df_fake_tracking.to_csv(Const.TRACKING_STORE, index=False, header=False)
+except:
+    print("FAIL")

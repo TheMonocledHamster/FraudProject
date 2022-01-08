@@ -1,12 +1,13 @@
 import json
 import os
+import random
 
 
 PLANS_RANGE = 16
 FEATURE_RANGE = 24
-SUBS_RANGE = 1000
-TRANS_RANGE = 4000
-USE_RANGE = 7000
+SUBS_RANGE = random.randint(3000,4000)
+TRANS_RANGE = random.randint(10000,13000)
+USE_RANGE = random.randint(50000,60000)
 
 
 relpath = lambda p: os.path.normpath(os.path.join(os.path.dirname(__file__), p))
@@ -31,4 +32,12 @@ ACTIONS = ["Call","SMS","Video Call"]
 p_actions = [0.45,0.45,0.1]
 
 TRANS_TYPES = ["SIM Change","Plan Renewal","New Plan","Data Add-on","New Sub"]
-p_trans = [0.01,0.65,0.05,0.15,0.14]
+p_trans = [0.01,0.60,0.05,0.14,0.2]
+
+
+PLANS_STORE = relpath("../StoreCSV/plans.csv")
+FEATURES_STORE = relpath("../StoreCSV/features.csv")
+SUBSCRIBERS_STORE = relpath("../StoreCSV/subscribers.csv")
+TRACKING_STORE = relpath("../StoreCSV/tracking.csv")
+TRANSACTIONS_STORE = relpath("../StoreCSV/transactions.csv")
+USAGE_DATA_STORE = relpath("../StoreCSV/usage_data.csv")
