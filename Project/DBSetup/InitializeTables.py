@@ -1,5 +1,5 @@
 import psycopg2
-from Resources import Const
+import Const
 
 params = Const.PARAMS
 pg_connection = psycopg2.connect(dbname=params["NAME"], user=params["USER"], password=params["PASSWORD"], host=params["HOST"], port=params["PORT"])

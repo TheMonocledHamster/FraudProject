@@ -12,7 +12,7 @@ USE_RANGE = 7000
 relpath = lambda p: os.path.normpath(os.path.join(os.path.dirname(__file__), p))
 with open(relpath("../../Resources/DBdetails.json"),"r") as deets:
     PARAMS = json.load(deets)
-with open(relpath("../../Resources/InitSchema.sql"),"r") as SCHEMA:
+with open(relpath("InitSchema.sql"),"r") as SCHEMA:
     SCHEMA = SCHEMA.read()
 
 

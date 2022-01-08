@@ -60,7 +60,7 @@ p_countries = Const.p_countries
 for i in range(Const.SUBS_RANGE):
     fake_subscribers["sub_id"].append( i )
     fake_subscribers["full_name"].append( fake.name() )
-    fake_subscribers["created_at"].append( fake.date_time_between(start_date='-12y', end_date='-4y') )
+    fake_subscribers["created_at"].append( fake.date_time_between(start_date='-9y', end_date='-4y') )
     fake_subscribers["country"].append( np.random.choice(list(avl_countries.keys()), p=p_countries) )
     fake_subscribers["phone_number"].append( '+' + str(avl_countries[fake_subscribers["country"][i]]) + ' ' \
         + str(random.randint(190,499)) + ' ' + str(random.randint(100,999)) + ' ' + str(random.randint(1000,9999)) )
@@ -146,4 +146,4 @@ for i in tracklist:
     track_change(i)
 df_fake_tracking = pd.DataFrame(fake_tracking)
 
-print(df_fake_subscribers,df_fake_transactions,df_fake_tracking,sep="\n\n")
+
