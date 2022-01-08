@@ -17,7 +17,7 @@ db_cursor = pg_connection.cursor()
 fake = Faker()
 fake_subscribers = defaultdict(list)
 fake_transactions = defaultdict(list)
-fake_plan = defaultdict(list)
+fake_plans = defaultdict(list)
 fake_usage_data = defaultdict(list)
 fake_features = defaultdict(list)
 
@@ -39,15 +39,15 @@ df_fake_features = pd.DataFrame(fake_features)
 
 #PLANS
 """ Generate plans, calculate costs and populate plans table """
-get_cost = lambda i : round(fake_plan["plan_data"][i] * fake_plan["validity"][i] * 5, -1) - 1
+get_cost = lambda i : round(fake_plans["plan_data"][i] * fake_plans["validity"][i] * 5, -1) - 1
 for i in range(Const.PLANS_RANGE):
-    fake_plan["plan_id"].append( i )
-    fake_plan["plan_data"].append( random.randint(2,6)/2.0 )
-    fake_plan["validity"].append( round(random.randint(15,360),-1) )
-    fake_plan["plan_cost"].append( get_cost(i) )
-    fake_plan["feature_id"].append( np.random.choice(df_fake_features.index.tolist()) )
-    fake_plan["postpaid"].append( np.random.choice([False,True],p=[0.75,0.25]) )
-df_fake_plans = pd.DataFrame(fake_plan)
+    fake_plans["plan_id"].append( i )
+    fake_plans["plan_data"].append( random.randint(2,6)/2.0 )
+    fake_plans["validity"].append( round(random.randint(15,360),-1) )
+    fake_plans["plan_cost"].append( get_cost(i) )
+    fake_plans["feature_id"].append( np.random.choice(df_fake_features.index.tolist()) )
+    fake_plans["postpaid"].append( np.random.choice([False,True],p=[0.75,0.25]) )
+df_fake_plans = pd.DataFrame(fake_plans)
 
 
 #SUBSCRIBERS
@@ -57,7 +57,7 @@ p_countries = Const.p_countries
 for i in range(Const.SUBS_RANGE):
     fake_subscribers["sub_id"].append( i )
     fake_subscribers["full_name"].append( fake.name() )
-    fake_subscribers["created_at"].append( fake.date_time_between(start_date='-17y', end_date='-11y') )
+    fake_subscribers["created_at"].append( fake.date_time_between(start_date='-9y', end_date='-3y') )
     fake_subscribers["country"].append( np.random.choice(list(avl_countries.keys()), p=p_countries) )
     fake_subscribers["phone_number"].append( '+' + str(avl_countries[fake_subscribers["country"][i]]) + ' ' \
         + str(random.randint(190,499)) + ' ' + str(random.randint(100,999)) + ' ' + str(random.randint(1000,9999)) )
@@ -67,13 +67,13 @@ df_fake_subscribers = pd.DataFrame(fake_subscribers)
 
 #USAGE
 """ Generate actions to populate usage table """
-avl_actions = ["Call","SMS","Video Call"]
-p_actions = [0.45,0.45,0.1]
+avl_actions = Const.ACTIONS
+p_actions = Const.p_actions
 for i in range(Const.USE_RANGE):
     fake_usage_data["usage_id"].append( i )
-    fake_usage_data["sub_id"].append( None )
+    fake_usage_data["sub_id"].append( np.random.choice() )
     fake_usage_data["use_type"].append( np.random.choice(avl_actions,p=p_actions) )
-    fake_usage_data["usage_time"].append( fake.date_time() )
+    fake_usage_data["usage_time"].append( fake.date_time_between(start_date='-2y', end_date='today') )
     fake_usage_data["amount"].append( random.randint(1,60) )
 df_fake_usage_data = pd.DataFrame(fake_usage_data)
 
@@ -86,7 +86,7 @@ for i in range(Const.TRANS_RANGE):
     fake_transactions["trans_id"].append( i )
     fake_transactions["sub_id"].append( None )
     fake_transactions["trans_type"].append( np.random.choice(avl_trans, p=p_trans) )
-    fake_transactions["created_at"].append( fake.date_time() )
+    fake_transactions["created_at"].append( fake.date_time_between(start_date='-3y', end_date='today') )
     fake_transactions["country"].append( None ) #Fill this with sub_id's country
     fake_transactions["buy_plan_id"].append( None )
 df_fake_transactions = pd.DataFrame(fake_transactions)
