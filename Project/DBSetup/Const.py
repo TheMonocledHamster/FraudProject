@@ -41,3 +41,12 @@ SUBSCRIBERS_STORE = relpath("../StoreCSV/subscribers.csv")
 TRACKING_STORE = relpath("../StoreCSV/tracking.csv")
 TRANSACTIONS_STORE = relpath("../StoreCSV/transactions.csv")
 USAGE_DATA_STORE = relpath("../StoreCSV/usage_data.csv")
+
+TABLES = {
+    "plans":PLANS_STORE,
+    "subscribers":SUBSCRIBERS_STORE,
+    "features":FEATURES_STORE,
+    "tracking":TRACKING_STORE,
+    "transactions":TRANSACTIONS_STORE,
+    "usage_data":USAGE_DATA_STORE
+}
