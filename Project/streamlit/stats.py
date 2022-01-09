@@ -35,6 +35,9 @@ def Stats():
     priceFig=px.pie(priceWise,values=priceWise['number'],names=priceWise['plan_cost'],title='Price wise users')
     st.plotly_chart(priceFig)
 
+    priceFig=px.bar(priceWise,y=priceWise['number'],x=priceWise['plan_cost'],title='Price-wise users')
+    st.plotly_chart(priceFig)
+
     st.write('Plan wise users')
     st.line_chart(planWise['number'])
 
