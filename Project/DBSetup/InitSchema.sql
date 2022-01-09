@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS transactions (
   trans_type varchar,
   created_at timestamp,
   country varchar,
-  buy_plan_id int
+  buy_plan_id int,
+  is_fraud boolean
 );
 
 CREATE TABLE IF NOT EXISTS plans (
@@ -30,7 +31,8 @@ CREATE TABLE IF NOT EXISTS usage_data (
   sub_id int,
   use_type varchar,
   usage_time timestamp,
-  amount int
+  amount int,
+  is_fraud boolean 
 );
 
 CREATE TABLE IF NOT EXISTS features (
