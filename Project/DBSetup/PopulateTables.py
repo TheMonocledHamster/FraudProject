@@ -114,7 +114,10 @@ for i in range(Const.USE_RANGE):
     fake_usage_data["sub_id"].append( np.random.choice(df_fake_subscribers["sub_id"].tolist()) )
     fake_usage_data["use_type"].append( np.random.choice(avl_actions,p=p_actions) )
     fake_usage_data["usage_time"].append( fake.date_time_between(start_date='-2y', end_date='now') )
-    fake_usage_data["amount"].append( random.randint(1,60) )
+    if fake_usage_data["use_type"][i] == "SMS":
+        fake_usage_data["amount"].append( np.random.choice([random.randint(1,50), random.randint(700,800)],p=[0.995,0.005]) )
+    else:
+        fake_usage_data["amount"].append( random.randint(1,10) )
     fake_usage_data["is_fraud"].append( False )
 df_fake_usage_data = pd.DataFrame(fake_usage_data)
 
