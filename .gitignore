@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+Resources/DBdetails11.json

@@ -22,7 +22,7 @@ BEGIN
     INSERT INTO tracking(tracking_id, trans_id, upgrade, cost_diff)
     VALUES (track_id, NEW.trans_id, (new_cost-old_cost>0), (new_cost-old_cost));
 	
-	UPDATE subscribers 
+	UPDATE subscribers
 	SET cur_plan_id = NEW.buy_plan_id 
 	WHERE sub_id = NEW.sub_id;
 	
