@@ -1,6 +1,7 @@
 import json
 import os
 import random
+import re
 
 
 PLANS_RANGE = 16
@@ -17,6 +18,10 @@ with open(relpath("InitSchema.sql"),"r") as SCHEMA:
     SCHEMA = SCHEMA.read()
 with open(relpath("AddForeignKeys.SQL"),"r") as FKeys:
     FKeys = FKeys.read()
+with open(relpath("NewPlanFunction.SQL"),"r") as PC_FN:
+    PC_FN = PC_FN.read()
+with open(relpath("NewPlanTrigger.SQL"),"r") as PC_TRIG:
+    PC_TRIG = PC_TRIG.read()
 
 
 COUNTRIES = {

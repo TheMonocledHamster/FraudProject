@@ -1,0 +1,7 @@
+{
+    "HOST":"localhost",
+    "NAME":"FraudDB",
+    "USER":"postgres",
+    "PASSWORD":"football11",
+    "PORT":5432
+}

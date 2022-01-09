@@ -5,7 +5,7 @@ import Const
 query=""
 
 for table in Const.TABLES:
-    query += "DROP TABLE IF EXISTS {}; ".format(table)
+    query += "DROP TABLE IF EXISTS {} CASCADE; ".format(table)
 
 
 params = Const.PARAMS
