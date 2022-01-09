@@ -13,12 +13,12 @@ def Stats():
     conn=connect.getConnDetails()
 
     st.header('Stats')
-    countryWise = pd.read_sql('SELECT country,COUNT(*) AS Number FROM subscribers GROUP BY country',conn)
+    countryWise = pd.read_sql('SELECT country,EXTRACT(YEAR FROM created_at) AS date,COUNT(*) AS Number FROM subscribers GROUP BY country,created_at',conn)
     planWise = pd.read_sql('SELECT plans.plan_id,COUNT(*) As Number FROM plans,subscribers WHERE plans.plan_id=subscribers.cur_plan_id GROUP BY plans.plan_id ORDER BY plans.plan_id ASC',conn)
     priceWise=pd.read_sql('SELECT plans.plan_cost,COUNT(*) As Number FROM plans,subscribers WHERE plans.plan_id=subscribers.cur_plan_id GROUP BY plans.plan_cost ORDER BY plans.plan_cost ASC',conn)
     # co=st.dataframe(countryWise)
-    co=pd.DataFrame()
-    # st.write(countryWise['number'])
+    # co=pd.DataFrame()
+    # st.write(countryWise)
 
     # visType=st.selectbox("Visualization type",['Pie Chart','Bar chart'])
     # if visType=='Pie Chart':
@@ -57,4 +57,20 @@ def Stats():
     # go.Bar(name='priceWise',x=priceWise['plan_cost'], y=priceWise['number'],marker=dict(color = priceWise['number'],
     #                 colorscale='puor')),])
     # st.plotly_chart(priceFig)
-        
+#     years=[]
+#     for i in range(len(countryWise)):
+#         years.append(int(countryWise['date'][i]))
+# # st.title(int(countryWise['date'][i]))
+#     data=pd.melt(countryWise,id_vars=['number']).rename(
+#         columns={
+#             "index":"number",
+#             "value":"date"
+#         }
+#     )
+#     chart=(alt.Chart(data).mark_area().encode(
+#         x="number",
+#         y=alt.Y("date",stack=None),
+#         color="country:N"
+#         )
+#     )
+#     st.altair_chart(chart,use_container_width=True)
