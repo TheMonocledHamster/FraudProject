@@ -7,7 +7,7 @@ def Queries():
 
     conn=connect.getConnDetails()
 
-
+    
     st.header('Queries')
     col1,col2,col3,col4,col5=st.columns(5)
     table='subscribers'
@@ -43,6 +43,11 @@ def Queries():
         orderBy=''
         order=st.text_input('ORDER BY')
 
+    # with col5:
+    #     groupBy=''
+    #     group=''
+        # group=st.text_input('GROUP BY')
+
     with col5:
         st.header('')
         if column=='All Columns':
@@ -51,8 +56,10 @@ def Queries():
             orderBy='ORDER BY '+order
         if whereFilter!='':
             where='WHERE '+whereFilter
-        st.button('Submit Query',key='queryCallback',on_click=execQuery,args=('SELECT '+column+' FROM '+table+' '+where+' '+orderBy,conn))
-
+        # if group!='':
+        #     groupBy='GROUP BY'+group
+        sql='SELECT '+column+' FROM '+table+' '+where+' '+orderBy
+        st.button('Submit Query',key='queryCallback',on_click=execQuery,args=(sql,conn))
     
     
 def execQuery(sql_query,conn):
