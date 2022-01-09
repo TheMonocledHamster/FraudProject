@@ -116,9 +116,11 @@ for i in range(Const.USE_RANGE):
     fake_usage_data["usage_time"].append( fake.date_time_between(start_date='-2y', end_date='now') )
     if fake_usage_data["use_type"][i] == "SMS":
         fake_usage_data["amount"].append( np.random.choice([random.randint(1,50), random.randint(700,800)],p=[0.995,0.005]) )
+        if fake_usage_data["amount"][i]>500:
+            fake_usage_data["is_fraud"].append( True )
     else:
         fake_usage_data["amount"].append( random.randint(1,10) )
-    fake_usage_data["is_fraud"].append( False )
+        fake_usage_data["is_fraud"].append( False )
 df_fake_usage_data = pd.DataFrame(fake_usage_data)
 
 
@@ -145,7 +147,6 @@ track_change.count = 0
 for i in tracklist:
     track_change(i)
 df_fake_tracking = pd.DataFrame(fake_tracking)
-
 
 
 
