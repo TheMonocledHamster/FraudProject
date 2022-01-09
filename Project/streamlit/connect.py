@@ -12,7 +12,7 @@ import sys
 conn=''
 def init_connection():
     relpath = lambda p: os.path.normpath(os.path.join(os.path.dirname(__file__), p))
-    with open(relpath("..\DBdetails.json"),"r") as deets:
+    with open(relpath("..\..\Resources\DBdetails.json"),"r") as deets:
         params = json.load(deets)
     conn=pg.connect(dbname=params["NAME"], user=params["USER"], password=params["PASSWORD"], host=params["HOST"], port=params["PORT"])
     return conn
