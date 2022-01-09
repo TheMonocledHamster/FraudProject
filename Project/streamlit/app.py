@@ -9,7 +9,7 @@ with st.sidebar:
     )
     page=st.selectbox(
     "",
-    ['Dashboard','Stats','Queries']
+    ['Dashboard','Stats','Frauds','Queries']
     )
 
 if(page=='Dashboard'):
