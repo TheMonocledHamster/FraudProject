@@ -6,9 +6,9 @@ import re
 
 PLANS_RANGE = 16
 FEATURE_RANGE = 24
-SUBS_RANGE = random.randint(3000,4000)
+SUBS_RANGE = random.randint(5000,5500)
 TRANS_RANGE = random.randint(10000,13000)
-USE_RANGE = random.randint(50000,60000)
+USE_RANGE = random.randint(70000,90000)
 
 
 relpath = lambda p: os.path.normpath(os.path.join(os.path.dirname(__file__), p))
@@ -29,10 +29,10 @@ COUNTRIES = {
     "Germany":49, 
     "Austria":43, 
     "France":33, 
-    "Poland":48, 
+    "Czech Republic":420, 
     "The Netherlands":31
     }
-p_countries = [0.15, 0.2, 0.1, 0.2, 0.15, 0.2]
+p_countries = [0.15, 0.25, 0.1, 0.2, 0.05, 0.25]
 
 
 ACTIONS = ["Call","SMS","Video Call"]

@@ -9,7 +9,6 @@ import psycopg2.extras as extras
 import Const
 
 
-
 fake = Faker()
 fake_subscribers = defaultdict(list)
 fake_transactions = defaultdict(list)
