@@ -6,5 +6,5 @@ from PIL import Image
 def Dashboard():
     st.header('Dashboard')
     st.subheader('Schema : ')
-    image = Image.open('../../Resources/FraudProject.png')
-    st.image(image, caption='')
+    image = Image.open('../../Resources/Schema.png')
+    st.image(image, caption='Schema')
