@@ -1,8 +1,8 @@
 import streamlit as st
-import dashboard as db 
-import stats 
-import queries 
-import frauds 
+import dashboard as db
+import stats
+import queries
+import frauds
 
 st.set_page_config(layout="wide")
 
