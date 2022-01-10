@@ -30,6 +30,8 @@ with open(relpath("CheckFraudProc.SQL"),"r") as CF_PROC:
     CF_PROC = CF_PROC.read()
 with open(relpath("FraudsView.SQL"),"r") as F_VIEW:
     F_VIEW = F_VIEW.read()
+with open(relpath("FraudIndex.SQL"),"r") as IDX:
+    IDX = IDX.read()
 
 
 COUNTRIES = {
