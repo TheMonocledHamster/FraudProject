@@ -8,7 +8,7 @@ PLANS_RANGE = 16
 FEATURE_RANGE = 24
 SUBS_RANGE = random.randint(5000,5500)
 TRANS_RANGE = random.randint(10000,13000)
-USE_RANGE = random.randint(70000,90000)
+USE_RANGE = random.randint(80000,100000)
 
 
 relpath = lambda p: os.path.normpath(os.path.join(os.path.dirname(__file__), p))
