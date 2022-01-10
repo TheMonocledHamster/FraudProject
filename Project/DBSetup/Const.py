@@ -22,6 +22,14 @@ with open(relpath("NewPlanFunction.SQL"),"r") as PC_FN:
     PC_FN = PC_FN.read()
 with open(relpath("NewPlanTrigger.SQL"),"r") as PC_TRIG:
     PC_TRIG = PC_TRIG.read()
+with open(relpath("DetectFraudFunction.SQL"),"r") as FT_FN:
+    FT_FN = FT_FN.read()
+with open(relpath("DetectFraudTrigger.SQL"),"r") as FT_TRIG:
+    FT_TRIG = FT_TRIG.read()
+with open(relpath("CheckFraudProc.SQL"),"r") as CF_PROC:
+    CF_PROC = CF_PROC.read()
+with open(relpath("FraudsView.SQL"),"r") as F_VIEW:
+    F_VIEW = F_VIEW.read()
 
 
 COUNTRIES = {

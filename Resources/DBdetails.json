@@ -1,7 +1,7 @@
 {
-    "HOST":"john.db.elephantsql.com",
-    "NAME":"bricwpov",
-    "USER":"bricwpov",
-    "PASSWORD":"WHjInMJhbIMMKFakX6bBB3rpr7uplWpG",
+    "HOST":"localhost",
+    "NAME":"FraudDB",
+    "USER":"postgres",
+    "PASSWORD":"football11",
     "PORT":5432
 }
