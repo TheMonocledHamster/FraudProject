@@ -1,7 +1,10 @@
 import streamlit as st
 import dashboard as db 
-import stats as stats
-import queries as queries
+import stats 
+import queries 
+import frauds 
+
+st.set_page_config(layout="wide")
 
 with st.sidebar:
     st.title(
@@ -20,3 +23,6 @@ if(page=='Stats'):
 
 if(page=='Queries'):
     queries.Queries()
+
+if(page=='Frauds'):
+    frauds.Frauds()
