@@ -97,7 +97,8 @@ for i in range(1,Const.TRANS_RANGE):
         new_subs["full_name"].append(fake.name())
         new_subs["created_at"].append(fake_transactions["created_at"][i])
         new_subs["country"].append(fake_transactions["country"][i])
-        new_subs["phone_no"].append('+' + str(avl_countries[fake_transactions["country"][i]]) + ' '  + str(random.randint(190,499)) + ' ' + str(random.randint(100,999)) + ' ' + str(random.randint(1000,9999)))
+        new_subs["phone_no"].append('+' + str(avl_countries[fake_transactions["country"][i]]) + ' '  + \
+             str(random.randint(190,499)) + ' ' + str(random.randint(100,999)) + ' ' + str(random.randint(1000,9999)))
         new_subs["cur_plan_id"].append(fake_transactions["buy_plan_id"][i])
         fake_transactions["sub_id"].append( j )
         j += 1
