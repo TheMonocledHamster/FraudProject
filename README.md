@@ -1,2 +1,2 @@
 # FraudProject
-Telecom Fraud Detection through Statistical Analysis   
+'Telecom Fraud Detection' using a sample database implemented to learn database concepts.
