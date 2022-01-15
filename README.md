@@ -1,6 +1,8 @@
 # FraudProject
-'Telecom Fraud Detection' using a sample database implemented to learn database concepts.
+Telecom Fraud Detection Prototype using both conventional database safeguards and statistical clustering algorithms.
 
-DB: Postgres (9+)
-Backend: Python (3.7+)
+DB: Postgres (11)
+<br/>
+Backend: Python (3.9)
+<br/>
 Visualization: Streamlit (1.3.1)
